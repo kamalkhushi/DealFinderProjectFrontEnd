@@ -1,0 +1,22 @@
+
+.home-page{
+    height:99vh;
+    position:relative;
+    .content{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .heading{
+        font-size:56px;
+        font-weight:700;
+        margin-bottom:30px;
+    }
+    .subtext{
+        font-size:20px;
+        span{
+            color:blue;
+        }
+    }
+}

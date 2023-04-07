@@ -1,0 +1,19 @@
+
+@media only screen and (max-width:475px){
+    .main-page{
+        
+            flex-direction:column;
+            background-color:white;
+            .left{
+                width:96%;
+                margin:auto;
+                .left-content{
+                    width:100%;
+                    padding-left:25px;
+                }
+            }
+            .right{
+                display:none;
+            }
+        }
+    }
