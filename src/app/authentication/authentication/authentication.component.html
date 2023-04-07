@@ -17,7 +17,7 @@
                     </div>
                 </div>
                 <div class="button-container">
-                    <div class="inactive button" (click)="showRegister = !showRegister">Register</div>
+                    <div class="inactive button" (click)="showRegister = !showRegister; alert = false">Register</div>
                     <div class="active button" (click)="submit()">Login</div>
                 </div>
                 <div class="checkbox-container">
@@ -56,7 +56,7 @@
                 <div class="button-container">
                     <div class="active button" (click)="submit()">Register</div>
                 </div>
-                <div class="login-btn">Already a user? <span (click)="showRegister = !showRegister"> Login </span></div>
+                <div class="login-btn">Already a user? <span (click)="showRegister = !showRegister; alert = false"> Login </span></div>
 
                 <ng-container *ngIf="alert">
                     <div class="alertMessage">{{alertMessage}}</div>
