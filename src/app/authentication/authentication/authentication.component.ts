@@ -52,20 +52,21 @@ export class AuthenticationComponent implements OnInit {
   }
 
   OnRegister(){
-    if(this.login.invalid){
+    if(this.register.invalid){
       this.alert = true;
-      if(this.login.controls['password'].errors){
+      this.alertMessage="please check all fields"
+      if(this.register.controls['password'].errors){
         this.alertMessage = "Password must be 6 characters long";
       }
-      // if(this.login.controls['username'].invalid){
-      //   this.alertMessage = "This field is required";
-      //   console.log(this.login.controls['username'].invalid)
-      // }
-      if(this.login.controls['email'].errors){
+      if(this.register.controls['username'].invalid){
+        this.alertMessage = "This field is required";
+        console.log(this.login.controls['username'].invalid)
+      }
+      if(this.register.controls['email'].errors){
         this.alertMessage = "Please enter a proper email";
       }
     }
-    else if(this.login.value.password !== this.login.value.confirmPassword){
+    else if(this.register.value.password !== this.register.value.confirmPassword){
       this.alert = true;
       this.alertMessage = "Passwords do not match";
     }
