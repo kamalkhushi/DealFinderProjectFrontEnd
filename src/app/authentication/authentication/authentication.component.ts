@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-authentication',
@@ -8,38 +9,70 @@ import { Router } from '@angular/router';
 })
 export class AuthenticationComponent implements OnInit {
 
-  constructor(private router : Router) {}
+  constructor(private router : Router, private formBuilder : FormBuilder) {}
 
-  ngOnInit(): void {
-    this.showRegister = false;
-  }
-  username = '';
-  email='';
-  password ='';
-  confirmPassword='';
-  ngDoCheck(){
-    localStorage.setItem('email', this.email);
-    localStorage.setItem('username', this.username ? this.username : this.email.split('@')[0]);
-  }
+  ngOnInit(): void {}
 
   hide:boolean = true;
-  
-  showRegister:boolean = false;
-  alertMessage = '';
+  hidePassword:boolean = true;
+  showLogin :boolean = true;
+
+  login : FormGroup = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required, Validators.minLength(6)])
+  });
+
+  register : FormGroup = new FormGroup({
+    username : new FormControl('',  [Validators.required]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    confirmPassword :  new FormControl('', [Validators.required, Validators.minLength(6)])
+  });
+
+  alertMessage :any;
   alert : boolean = false;
-  submit(){
-    if(!this.email || !this.password || (!this.username && this.showRegister)){
+ 
+  onLogin(){
+    console.log(this.login.value);
+    if(this.login.invalid){
       this.alert = true;
-      this.alertMessage = "Please fill all the input fields"
-    }
-    else if((this.password !== this.confirmPassword) && this.showRegister){
-      this.alert = true;
-      this.alertMessage = "Passwords do not match";
-      this.password = "";
-      this.confirmPassword = "";
+      if(this.login.controls['password'].errors){
+        this.alertMessage = "Password must be 6 characters long";
+      }
+      else{
+        this.alertMessage = "Please enter a proper email";
+      }
     }
     else{
       this.alert = false;
+      localStorage.setItem('email', this.login.value.email);
+      localStorage.setItem('username', this.login.value.username ? this.login.value.username : this.login.value.email.split('@')[0]);
+      this.router.navigate(['home']);
+    }
+  }
+
+  OnRegister(){
+    if(this.login.invalid){
+      this.alert = true;
+      if(this.login.controls['password'].errors){
+        this.alertMessage = "Password must be 6 characters long";
+      }
+      // if(this.login.controls['username'].invalid){
+      //   this.alertMessage = "This field is required";
+      //   console.log(this.login.controls['username'].invalid)
+      // }
+      if(this.login.controls['email'].errors){
+        this.alertMessage = "Please enter a proper email";
+      }
+    }
+    else if(this.login.value.password !== this.login.value.confirmPassword){
+      this.alert = true;
+      this.alertMessage = "Passwords do not match";
+    }
+    else{
+      this.alert = false;
+      localStorage.setItem('email', this.register.value.email);
+      localStorage.setItem('username', this.register.value.username);
       this.router.navigate(['home']);
     }
   }

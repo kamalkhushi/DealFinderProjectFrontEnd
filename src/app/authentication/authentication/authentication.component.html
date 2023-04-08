@@ -3,22 +3,24 @@
         <div class="left-content">
 
             <!-- login-page -->
-            <ng-container *ngIf="!showRegister">
+            <ng-container *ngIf="showLogin">
                 <div class="heading">Login your account</div>
                 <div class="form">
-                    <div class="input-field">
-                        <label for="email">Email</label><br>
-                        <input type="text" name="email" [(ngModel)]="email" placeholder="Your E-mail" required>
-                    </div>
-                    <div class="input-field">
-                        <label for="password">Password</label><br>
-                        <input type="{{hide ? 'password' : 'text'}}" name="password" [(ngModel)]="password" placeholder="Your Password" required>
-                        <i class="far fa-eye" id="togglePassword" (click)="hide = !hide"></i>
-                    </div>
+                    <form [formGroup]="login">
+                        <div class="input-field">
+                            <label for="email">Email</label><br>
+                            <input type="email" id="email" formControlName="email" placeholder="Your E-mail">
+                        </div>
+                        <div class="input-field">
+                            <label for="password">Password</label><br>
+                            <input type="{{hide ? 'password' : 'text'}}" id="password" formControlName="password" placeholder="Your Password">
+                            <i class="far fa-eye" id="togglePassword" (click)="hide = !hide"></i>
+                        </div>
+                    </form>
                 </div>
                 <div class="button-container">
-                    <div class="inactive button" (click)="showRegister = !showRegister; alert = false">Register</div>
-                    <div class="active button" (click)="submit()">Login</div>
+                    <div class="inactive button" (click)="showLogin = !showLogin">Register</div>
+                    <div (click)="onLogin()" class="active button">Login</div>
                 </div>
                 <div class="checkbox-container">
                     <input type="checkbox" class="check-box">
@@ -30,33 +32,37 @@
                 </ng-container>
             </ng-container>
 
+
             <!-- register-page -->
-            <ng-container *ngIf="showRegister">
+            <ng-container *ngIf="!showLogin">
                 <div class="heading">Register</div>
                 <div class="form">
-                    <div class="input-field">
-                        <label for="username">Username</label><br>
-                        <input type="text" name="username" [(ngModel)]="username" placeholder="Your Username" required>
-                    </div>
-                    <div class="input-field">
-                        <label for="email">Email</label><br>
-                        <input type="text" name="email" [(ngModel)]="email" placeholder="Your E-mail" required>
-                    </div>
-                    <div class="input-field">
-                        <label for="password">Password</label><br>
-                        <input type="{{hide ? 'password' : 'text'}}" name="password" [(ngModel)]="password" placeholder="Your Password" required>
-                        <i class="far fa-eye" id="togglePassword" (click)="hide = !hide"></i>
-                    </div>
-                    <div class="input-field">
-                        <label for="password">Confirm Password</label><br>
-                        <input type="{{hide ? 'password' : 'text'}}" name="password" [(ngModel)]="confirmPassword" placeholder="Your Password" required>
-                        <i class="far fa-eye" id="togglePassword" (click)="hide = !hide"></i>
-                    </div>
+                    <form [formGroup]="register">
+                        <div class="input-field">
+                            <label for="username">Username</label><br>
+                            <input type="text" formControlName="username" placeholder="Your Username">
+                        </div>
+                        <div class="input-field">
+                            <label for="email">Email</label><br>
+                            <input type="email" formControlName="email" placeholder="Your E-mail">
+                        </div>
+                        <div class="input-field">
+                            <label for="password">Password</label><br>
+                            <input type="{{hide ? 'password' : 'text'}}" formControlName="password" placeholder="Your Password">
+                            <i class="far fa-eye" id="togglePassword" (click)="hide = !hide"></i>
+                        </div>
+                        <div class="input-field">
+                            <label for="confirm-password">Confirm Password</label><br>
+                            <input type="{{hidePassword ? 'password' : 'text'}}" 
+                                id="confirmPassword" name="confirm-password" formControlName="confirmPassword" placeholder="Your Password">
+                            <i class="far fa-eye" id="togglePassword" (click)="hidePassword = !hidePassword"></i>
+                        </div>
+                    </form>
                 </div>
                 <div class="button-container">
-                    <div class="active button" (click)="submit()">Register</div>
+                    <div class="active button" (click)="OnRegister()">Register</div>
                 </div>
-                <div class="login-btn">Already a user? <span (click)="showRegister = !showRegister; alert = false"> Login </span></div>
+                <div class="login-btn">Already a user? <span (click)="showLogin = !showLogin"> Login </span></div>
 
                 <ng-container *ngIf="alert">
                     <div class="alertMessage">{{alertMessage}}</div>
